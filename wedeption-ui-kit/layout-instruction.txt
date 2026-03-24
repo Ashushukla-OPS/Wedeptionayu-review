@@ -1,0 +1,6 @@
+// _app or root layout injection - add import './wedeption-ui-kit/theme.css' at the top of your root layout file
+// Example (app/layout.js):
+import './wedeption-ui-kit/theme.css'
+export default function RootLayout({children}){
+  return <html><body>{children}</body></html>
+}

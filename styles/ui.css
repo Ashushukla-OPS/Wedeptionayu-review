@@ -1,0 +1,30 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base resets and typography */
+:root{
+  --accent: theme('colors.wede-accent');
+  --gold: theme('colors.wede-gold');
+}
+
+body { background: #fffdfb; color: #0f172a; font-family: Inter, system-ui, -apple-system; }
+h1,h2,h3 { font-family: 'Limelight', serif; color: #0f172a; }
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+.header { background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95)); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(15,23,42,0.04); }
+.brand { color: #0f172a; font-weight:700; font-size:20px; }
+.hero { display:flex; gap:24px; align-items:center; padding:48px 0; }
+.hero-card { background: white; border-radius: 16px; padding:28px; box-shadow: 0 8px 30px rgba(15,23,42,0.06); }
+.btn { background: #d77fa3; color: white; padding:10px 18px; border-radius: 10px; font-weight:600; }
+.card { background: white; padding:16px; border-radius:12px; box-shadow: 0 6px 20px rgba(15,23,42,0.04); }
+.tag { background: rgba(215,127,163,0.08); color: #d77fa3; padding:6px 10px; border-radius:999px; font-size:12px; }
+
+/* Feed masonry */
+.masonry { column-count: 3; column-gap: 16px; }
+@media (max-width: 900px){ .masonry { column-count: 2 } }
+@media (max-width: 600px){ .masonry { column-count: 1 } }
+.masonry-item { break-inside: avoid; margin-bottom: 16px; border-radius:10px; overflow:hidden; background: #fff; }
+
+/* Accessibility focus styles */
+a:focus, button:focus, input:focus { outline: 3px solid rgba(207,175,106,0.18); outline-offset: 2px; }

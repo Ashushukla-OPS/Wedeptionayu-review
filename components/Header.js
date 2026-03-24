@@ -1,0 +1,2 @@
+import Link from 'next/link'
+export default function Header(){ return (<header style={{padding:16,background:'#fff',borderBottom:'1px solid #eee'}}><nav style={{display:'flex',gap:16}}><Link href="/">Home</Link><Link href="/vendors">Vendors</Link><Link href="/inspiration">Inspiration</Link><Link href="/register-vendor">Register</Link></nav></header>) }
