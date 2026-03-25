@@ -41,10 +41,20 @@ export default async function handler(req, res) {
     // Parse multipart form data
     const form = formidable({
       maxFileSize: 100 * 1024 * 1024, // 100MB max
-      keepExtensions: true
+      keepExtensions: true,
+      uploadDir: '/tmp' // Ensure we use writable directory on Vercel
     })
 
-    const [fields, files] = await form.parse(req)
+    let fields, files
+    try {
+      [fields, files] = await form.parse(req)
+    } catch (parseErr) {
+      console.error('Formidable parse error:', parseErr)
+      return res.status(400).json({ 
+        error: 'Failed to parse file upload',
+        details: parseErr.message
+      })
+    }
     const file = Array.isArray(files.file) ? files.file[0] : files.file
     
     if (!file) {
