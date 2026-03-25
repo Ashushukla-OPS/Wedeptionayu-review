@@ -1075,7 +1075,7 @@ html {
   color: var(--accent-rose);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .wede-nav-desktop {
     display: none;
   }

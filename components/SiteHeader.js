@@ -149,10 +149,10 @@ export default function SiteHeader() {
       <div
         className="container"
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'auto 1fr auto',
+          display: 'flex',
+          justifyContent: 'space-between',
           alignItems: 'center',
-          gap: 12,
+          gap: 16,
           width: '100%',
         }}
       >
