@@ -4934,9 +4934,9 @@ function AvailabilitySection({ vendor }) {
       </h1>
 
       <div className="avail-cal-grid" style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '24px'
+        width: '100%',
+        boxSizing: 'border-box',
+        overflow: 'hidden',
       }}>
         {/* Left Panel - Calendar */}
         <div className="avail-cal-card" style={{

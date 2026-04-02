@@ -7,16 +7,7 @@ export const metadata = {
   title: 'Wedeption - Plan Your Dream Wedding',
   description: 'Discover premium wedding vendors, get AI-powered planning, and create unforgettable memories. Your trusted partner in planning the perfect wedding.',
   keywords: 'wedding planning, wedding vendors, wedding inspiration, wedding decor, wedding photography',
-  icons: {
-    icon: [
-      { url: '/Photos/lOGO.png', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/Photos/lOGO.png', type: 'image/png' },
-    ],
-    shortcut: '/Photos/lOGO.png',
-  },
-  metadataBase: new URL('https://wedeption.in'),
+  // app/icon.png is automatically picked up by Next.js App Router as the favicon
 };
 
 export default function RootLayout({ children }) {
@@ -24,12 +15,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="theme-color" content="#D4AF37" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <link rel="icon" type="image/png" href="/Photos/lOGO.png" />
-        <link rel="apple-touch-icon" href="/Photos/lOGO.png" />
+        {/* Explicit favicon links — belt-and-suspenders for all browsers */}
+        <link rel="icon" sizes="any" href="/icon.png" />
+        <link rel="apple-touch-icon" href="/icon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Razorpay script will be loaded dynamically when needed */}
         <script
           dangerouslySetInnerHTML={{
             __html: `

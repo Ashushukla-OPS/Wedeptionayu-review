@@ -491,51 +491,103 @@ body {
 }
 
 /* Vendor Dashboard – Availability Calendar Mobile */
+
+/* Base class so CSS can override inline styles */
+.avail-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* ≤768px — tablet: stack vertically */
+@media (max-width: 768px) {
+  .avail-cal-grid {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+}
+
+/* ≤640px — small phones */
 @media (max-width: 640px) {
   .avail-cal-title {
     font-size: 22px !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 16px !important;
   }
   .avail-cal-grid {
     grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+    overflow: hidden !important;
   }
   .avail-cal-card {
     padding: 12px !important;
     border-radius: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
   }
   .avail-cal-dayheader {
-    gap: 4px !important;
-    margin-bottom: 8px !important;
+    gap: 3px !important;
+    margin-bottom: 6px !important;
   }
   .avail-cal-dayheader > div {
-    font-size: 11px !important;
-    padding: 4px 0 !important;
+    font-size: 10px !important;
+    padding: 3px 0 !important;
   }
   .avail-cal-cells {
-    gap: 4px !important;
-    margin-bottom: 16px !important;
+    gap: 3px !important;
+    margin-bottom: 12px !important;
   }
   .avail-cal-cell {
-    min-height: 36px !important;
-    padding: 4px !important;
-    border-radius: 6px !important;
+    min-height: 32px !important;
+    padding: 2px !important;
+    border-radius: 5px !important;
     border-width: 1.5px !important;
   }
   .avail-cal-cell span {
-    font-size: 13px !important;
+    font-size: 12px !important;
   }
   .avail-cal-legend {
-    gap: 12px !important;
-    margin-bottom: 16px !important;
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+    justify-content: center !important;
   }
   .avail-cal-legend > div {
-    font-size: 12px !important;
-    gap: 6px !important;
+    font-size: 11px !important;
+    gap: 5px !important;
   }
   .avail-cal-legend > div > div {
-    width: 16px !important;
-    height: 16px !important;
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
+/* ≤390px — iPhone mini / SE / ultra-narrow */
+@media (max-width: 390px) {
+  .avail-cal-title {
+    font-size: 20px !important;
+    margin-bottom: 12px !important;
+  }
+  .avail-cal-card {
+    padding: 10px !important;
+  }
+  .avail-cal-dayheader > div {
+    font-size: 9px !important;
+  }
+  .avail-cal-cells {
+    gap: 2px !important;
+  }
+  .avail-cal-cell {
+    min-height: 28px !important;
+    padding: 1px !important;
+    border-radius: 4px !important;
+  }
+  .avail-cal-cell span {
+    font-size: 11px !important;
   }
 }
 
