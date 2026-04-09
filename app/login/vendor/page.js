@@ -69,23 +69,13 @@ export default function VendorLoginPage() {
 
   useEffect(() => {
     if (!auth) return
-    return onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setLoggedInUser(user)
-        try {
-          const token = await user.getIdToken()
-          const vendorCheck = await fetch('/api/vendor/me', {
-            headers: { 'Authorization': `Bearer ${token}` }
-          })
-          setIsVendor(vendorCheck.ok)
-        } catch {
-          setIsVendor(false)
-        }
-      } else {
-        setLoggedInUser(null)
-        setIsVendor(false)
+        setLoading(true)
+        await handleJustLoggedIn()
       }
     })
+    return () => unsubscribe()
   }, [])
 
   const sendOtp = async () => {
@@ -128,11 +118,10 @@ export default function VendorLoginPage() {
     setLoading(true)
     try {
       await confirmationResultRef.current.confirm(otp)
-      await handleJustLoggedIn()
+      // Redirect is handled by onAuthStateChanged
     } catch (err) {
       console.error(err)
       alert('Invalid or expired OTP')
-    } finally {
       setLoading(false)
     }
   }
@@ -141,11 +130,10 @@ export default function VendorLoginPage() {
     setLoading(true)
     try {
       await signInWithPopup(auth, googleProvider)
-      await handleJustLoggedIn()
+      // Redirect is handled by onAuthStateChanged
     } catch (err) {
       console.error(err)
       alert('Google sign-in failed')
-    } finally {
       setLoading(false)
     }
   }
@@ -165,63 +153,8 @@ export default function VendorLoginPage() {
         <h2 style={{ marginBottom: 8, fontSize: 24, fontWeight: 900, color: '#111827', letterSpacing: '-0.02em' }}>Vendor Login</h2>
         <p style={{ fontSize: 14, color: '#666', marginBottom: 24 }}>Sign in to access your vendor dashboard or register as a vendor.</p>
 
-        {/* When already logged in (e.g. as customer), show option to continue without re-login */}
-        {loggedInUser && (
-          <div style={{
-            marginBottom: 24,
-            padding: 16,
-            background: '#f0fdf4',
-            border: '1px solid #86efac',
-            borderRadius: 8
-          }}>
-            <p style={{ fontSize: 14, fontWeight: 600, color: '#166534', marginBottom: 12 }}>
-              You&apos;re already logged in
-            </p>
-            <p style={{ fontSize: 13, color: '#15803d', marginBottom: 12 }}>
-              {loggedInUser.email || loggedInUser.phoneNumber || 'Signed in'}
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {isVendor ? (
-                <button
-                  type="button"
-                  onClick={() => router.push('/vendor/dashboard')}
-                  style={{
-                    width: '100%',
-                    padding: 12,
-                    background: 'linear-gradient(135deg, #E91E63 0%, #C2185B 100%)',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: 12,
-                    fontWeight: 800,
-                    cursor: 'pointer'
-                  }}
-                >
-                  Go to Vendor Dashboard
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => router.push('/register-vendor')}
-                  style={{
-                    width: '100%',
-                    padding: 12,
-                    background: 'linear-gradient(135deg, #E91E63 0%, #C2185B 100%)',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: 12,
-                    fontWeight: 800,
-                    cursor: 'pointer'
-                  }}
-                >
-                  Continue to Vendor Registration
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
         <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>
-          Or sign in with a new account:
+          Sign in with your account:
         </p>
 
         <div id="recaptcha-container-vendor" style={{ marginBottom: 20 }}></div>

@@ -15,9 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="theme-color" content="#D4AF37" />
-        {/* Explicit favicon links — belt-and-suspenders for all browsers */}
-        <link rel="icon" sizes="any" href="/icon.png" />
-        <link rel="apple-touch-icon" href="/icon.png" />
+        {/* Next.js automatically creates favicon links from app/icon.png */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
