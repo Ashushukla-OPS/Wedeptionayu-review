@@ -160,7 +160,7 @@ export default function SiteHeader() {
         <div className="wede-brand-wrap" style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 14, textDecoration: 'none' }}>
             <img
-              src="/Photos/lOGO.png"
+              src="/Photos/logo.png"
               alt="Wedeption"
               className="wede-logo-img"
               style={{ height: 56, width: 'auto', objectFit: 'contain' }}
