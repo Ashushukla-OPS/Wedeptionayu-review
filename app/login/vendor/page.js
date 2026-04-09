@@ -23,8 +23,7 @@ export default function VendorLoginPage() {
   const [otp, setOtp] = useState('')
   const [showOtp, setShowOtp] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [loggedInUser, setLoggedInUser] = useState(null)
-  const [isVendor, setIsVendor] = useState(false)
+  const [checking, setChecking] = useState(true)
 
   const confirmationResultRef = useRef(null)
 
@@ -38,17 +37,17 @@ export default function VendorLoginPage() {
         body: JSON.stringify({ role: 'vendor' })
       })
       if (goToDashboard) {
-        router.push('/vendor/dashboard')
+        router.replace('/vendor/dashboard')
       } else {
-        router.push('/register-vendor')
+        router.replace('/register-vendor')
       }
     } catch (e) {
       console.error('Vendor sync/redirect error:', e)
-      router.push('/register-vendor')
+      router.replace('/register-vendor')
     }
   }
 
-  // When user just logged in (OTP/Google), redirect; do NOT auto-redirect on page load
+  // When user just logged in (OTP/Google), redirect immediately
   const handleJustLoggedIn = async () => {
     if (!auth?.currentUser) return
     try {
@@ -63,30 +62,34 @@ export default function VendorLoginPage() {
       }
     } catch (e) {
       console.error('Vendor redirect error:', e)
-      router.push('/register-vendor')
+      router.replace('/register-vendor')
     }
   }
 
+  // Auto-redirect if already logged in — no "already logged in" box shown
   useEffect(() => {
-    if (!auth) return
+    if (!auth) { setChecking(false); return }
     return onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setLoggedInUser(user)
+        // Already authenticated → check vendor status and redirect silently
         try {
           const token = await user.getIdToken()
           const vendorCheck = await fetch('/api/vendor/me', {
             headers: { 'Authorization': `Bearer ${token}` }
           })
-          setIsVendor(vendorCheck.ok)
+          if (vendorCheck.ok) {
+            router.replace('/vendor/dashboard')
+          } else {
+            router.replace('/register-vendor')
+          }
         } catch {
-          setIsVendor(false)
+          router.replace('/register-vendor')
         }
       } else {
-        setLoggedInUser(null)
-        setIsVendor(false)
+        setChecking(false)
       }
     })
-  }, [])
+  }, [router])
 
   const sendOtp = async () => {
     const formatted = formatPhone(phone)
@@ -150,6 +153,31 @@ export default function VendorLoginPage() {
     }
   }
 
+  // Show a minimal loading screen while checking auth state
+  if (checking) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'radial-gradient(1000px 600px at 10% 10%, rgba(233,30,99,0.12) 0%, rgba(233,30,99,0) 50%), linear-gradient(135deg, #fff1f2 0%, #fff7ed 45%, #eef2ff 100%)'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            width: 48, height: 48, borderRadius: '50%',
+            border: '4px solid #f3f4f6',
+            borderTop: '4px solid #E91E63',
+            animation: 'spin 0.8s linear infinite',
+            margin: '0 auto 16px'
+          }} />
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+          <p style={{ color: '#666', fontSize: 14 }}>Checking session…</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       style={{
@@ -164,65 +192,6 @@ export default function VendorLoginPage() {
         <div style={{ height: 6, borderRadius: 999, background: 'linear-gradient(90deg, #E91E63, #C2185B)', marginBottom: 18 }} />
         <h2 style={{ marginBottom: 8, fontSize: 24, fontWeight: 900, color: '#111827', letterSpacing: '-0.02em' }}>Vendor Login</h2>
         <p style={{ fontSize: 14, color: '#666', marginBottom: 24 }}>Sign in to access your vendor dashboard or register as a vendor.</p>
-
-        {/* When already logged in (e.g. as customer), show option to continue without re-login */}
-        {loggedInUser && (
-          <div style={{
-            marginBottom: 24,
-            padding: 16,
-            background: '#f0fdf4',
-            border: '1px solid #86efac',
-            borderRadius: 8
-          }}>
-            <p style={{ fontSize: 14, fontWeight: 600, color: '#166534', marginBottom: 12 }}>
-              You&apos;re already logged in
-            </p>
-            <p style={{ fontSize: 13, color: '#15803d', marginBottom: 12 }}>
-              {loggedInUser.email || loggedInUser.phoneNumber || 'Signed in'}
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {isVendor ? (
-                <button
-                  type="button"
-                  onClick={() => router.push('/vendor/dashboard')}
-                  style={{
-                    width: '100%',
-                    padding: 12,
-                    background: 'linear-gradient(135deg, #E91E63 0%, #C2185B 100%)',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: 12,
-                    fontWeight: 800,
-                    cursor: 'pointer'
-                  }}
-                >
-                  Go to Vendor Dashboard
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => router.push('/register-vendor')}
-                  style={{
-                    width: '100%',
-                    padding: 12,
-                    background: 'linear-gradient(135deg, #E91E63 0%, #C2185B 100%)',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: 12,
-                    fontWeight: 800,
-                    cursor: 'pointer'
-                  }}
-                >
-                  Continue to Vendor Registration
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        <p style={{ fontSize: 13, color: '#666', marginBottom: 12 }}>
-          Or sign in with a new account:
-        </p>
 
         <div id="recaptcha-container-vendor" style={{ marginBottom: 20 }}></div>
 
