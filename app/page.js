@@ -2,6 +2,7 @@
 
 import Hero from '../components/Hero';
 import VendorCard from '../components/VendorCard';
+import VendorCTA from '../components/VendoCTA'
 import Footer from '../components/Footer';
 import PopularSearches from '../components/PopularSearches';
 import InspirationToLookFor from '../components/InspirationToLookFor';
@@ -321,9 +322,9 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="home-section" style={{
+      {/* <section className="home-section" style={{
         margin: '0',
-        background: 'linear-gradient(135deg, #be185d 0%, #831843 100%)',
+        background: 'linear-gradient(135deg, #bfafb6 0%, #831843 100%)',
         color: 'white',
         textAlign: 'center',
         position: 'relative',
@@ -380,71 +381,218 @@ export default function HomePage() {
             </div>
           </motion.div>
         </div>
-      </section>
-
+      </section> */}
+      <VendorCTA />
       {/* Inspiration to Look for Section */}
-      <InspirationToLookFor />
+      <InspirationToLookFor />f
 
       {/* Compare Banner */}
-      <section className="home-section" style={{ background: '#fff' }}>
-        <div className="container">
+      <section className="home-section" style={{    background:
+      'radial-gradient(circle at top left, #3b0764 0%, #111827 38%, #020617 100%)',
+ }}>
+  <div className="container">
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.55, ease: 'easeOut' }}
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        borderRadius: '28px',
+        padding: 'clamp(28px, 5vw, 54px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: 32,
+        background:
+          'linear-gradient(135deg, #fff1f7 0%, #fdf2f8 42%, #ffe4ef 100%)',
+        border: '1px solid rgba(190, 24, 93, 0.10)',
+        boxShadow:
+          '0 24px 70px rgba(190, 24, 93, 0.13), inset 0 1px 0 rgba(255,255,255,0.8)',
+      }}
+    >
+      {/* Soft background glow */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '-90px',
+          right: '-80px',
+          width: 260,
+          height: 260,
+          borderRadius: '50%',
+          background:
+            'radial-gradient(circle, rgba(244,114,182,0.28), transparent 68%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '-110px',
+          left: '-90px',
+          width: 300,
+          height: 300,
+          borderRadius: '50%',
+          background:
+            'radial-gradient(circle, rgba(251,207,232,0.55), transparent 70%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Small decorative pattern */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage:
+            'linear-gradient(rgba(190,24,93,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(190,24,93,0.035) 1px, transparent 1px)',
+          backgroundSize: '42px 42px',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <div style={{ position: 'relative', zIndex: 1, flex: '1 1 420px' }}>
+        <motion.div
+          initial={{ opacity: 0, x: -12 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, delay: 0.1 }}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '7px 15px',
+            borderRadius: '100px',
+            background: 'rgba(255,255,255,0.72)',
+            color: '#be185d',
+            fontSize: 12,
+            fontWeight: 800,
+            letterSpacing: '0.08em',
+            marginBottom: 18,
+            border: '1px solid rgba(190,24,93,0.12)',
+            boxShadow: '0 8px 20px rgba(190,24,93,0.08)',
+            textTransform: 'uppercase',
+          }}
+        >
+          ⚖️ Smart Wedding Tool
+        </motion.div>
+
+        <h2
+          className="home-section-title"
+          style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: 'clamp(32px, 4vw, 46px)',
+            color: '#831843',
+            margin: '0 0 14px',
+            lineHeight: 1.08,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          Compare Vendors
+          <br />
+          Side-by-Side
+        </h2>
+
+        <p
+          className="home-section-subtitle"
+          style={{
+            fontSize: 17,
+            color: '#6b2948',
+            margin: 0,
+            maxWidth: 540,
+            lineHeight: 1.7,
+          }}
+        >
+          Confused between vendors? Compare pricing, ratings, services and
+          features in one simple view before making the perfect choice.
+        </p>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.94 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.45, delay: 0.18 }}
+        style={{
+          position: 'relative',
+          zIndex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          gap: 14,
+          flex: '0 1 300px',
+          padding: 22,
+          borderRadius: 24,
+          background: 'rgba(255,255,255,0.72)',
+          border: '1px solid rgba(255,255,255,0.9)',
+          backdropFilter: 'blur(14px)',
+          boxShadow: '0 18px 45px rgba(190,24,93,0.13)',
+        }}
+      >
+        <div style={{ display: 'flex', gap: 10, width: '100%' }}>
+          {['Price', 'Rating', 'Services'].map((item) => (
+            <div
+              key={item}
+              style={{
+                flex: 1,
+                padding: '10px 8px',
+                borderRadius: 14,
+                textAlign: 'center',
+                background: '#fff7fb',
+                color: '#9d174d',
+                fontSize: 12,
+                fontWeight: 800,
+                border: '1px solid rgba(190,24,93,0.08)',
+              }}
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+
+        <Link href="/compare" style={{ textDecoration: 'none', width: '100%' }}>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            whileHover={{ y: -3, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             style={{
-              background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)',
-              borderRadius: '24px',
-              padding: '48px',
-              display: 'flex',
+              width: '100%',
+              display: 'inline-flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: 32,
-              boxShadow: '0 20px 40px rgba(49,46,129,0.2)'
+              justifyContent: 'center',
+              gap: 10,
+              padding: '15px 28px',
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, #be185d 0%, #831843 100%)',
+              color: '#fff',
+              fontSize: 15,
+              fontWeight: 800,
+              boxShadow: '0 14px 30px rgba(190,24,93,0.28)',
+              border: '1px solid rgba(255,255,255,0.18)',
             }}
           >
-            <div style={{ flex: '1 1 400px' }}>
-              <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '6px 14px', borderRadius: '100px',
-                background: 'rgba(255,255,255,0.1)', color: '#e0e7ff',
-                fontSize: 13, fontWeight: 700, letterSpacing: '0.05em',
-                marginBottom: 16
-              }}>
-                ⚖️ SMART TOOLS
-              </div>
-              <h2 className="home-section-title" style={{ fontSize: 'clamp(32px, 4vw, 44px)', color: '#fff', margin: '0 0 16px' }}>
-                Compare Vendors Side-by-Side
-              </h2>
-              <p className="home-section-subtitle" style={{ fontSize: 17, color: '#c7d2fe', margin: 0, maxWidth: 500 }}>
-                Can't decide? Add up to 3 vendors to your comparison list and evaluate their pricing, ratings, and features in one clear view.
-              </p>
-            </div>
-
-            <Link href="/compare" style={{ textDecoration: 'none' }}>
-              <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: 10,
-                padding: '16px 36px', borderRadius: '16px',
-                background: '#fff', color: '#1e1b4b',
-                fontSize: 16, fontWeight: 700,
-                boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
-                transition: 'all 0.25s'
-              }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.3)' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)' }}
-              >
-                Go to Compare Tool
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-                </svg>
-              </div>
-            </Link>
+            Go to Compare Tool
+            <svg
+              width="19"
+              height="19"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
           </motion.div>
-        </div>
-      </section>
-
+        </Link>
+      </motion.div>
+    </motion.div>
+  </div>
+</section>
       {/* App Coming Soon Section */}
       <section className="home-section" style={{
         background: 'white',
